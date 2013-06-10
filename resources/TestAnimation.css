@@ -1,0 +1,58 @@
+@-webkit-keyframes TestAnimation {
+  0% {
+  }
+  25% {
+    margin-left: -150px;
+    width: 150px;
+    height: 150px;
+    opacity: 1;
+  }
+  50% {
+    margin-top: -150px;
+    width: 50px;
+    height: 50px;
+    opacity: 0.75;
+  }
+  100% {
+    margin-left: 150px;
+  }
+}
+
+@-webkit-keyframes MyAnimation {
+  from {
+    margin-left: -100px;
+    margin-top: -100px;
+  }
+  25%, 75% {
+    margin-top: 100px;
+  }
+  50% {
+    color: #FF0050;
+    margin-top: -100px;
+  }
+  to {
+    margin-left: 300px;
+    margin-top: -100px;
+  }
+}
+
+@-webkit-keyframes rotate {
+    0% {
+      -webkit-transform: rotateZ(0);
+    }
+    100% {
+      -webkit-transform: rotateZ(360deg);
+    }
+}
+
+@-webkit-keyframes jump-in {
+    0% {
+      -webkit-transform: scale(0);
+    }
+    75% {
+      -webkit-transform: scale(1.5);
+    }
+    100% {
+      -webkit-transform: scale(1);
+    }
+}

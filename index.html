@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mahé (code)
+           Marcin Wichary (code and design)
+           
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<!--
+This code features:
+- inline styles
+- <style> blocks
+- multiple <script> blocks
+- almost no comments
+- <br>'s
+
+I'm a trained proffesional, don't try this at home...
+
+Konrad
+-->
+
+<html>
+  <head>
+    <title>Presentation</title>
+
+    <meta charset='utf-8'>
+    <script src='resources/libs/slides.js'></script>
+    <script src='resources/libs/jquery.js'></script>
+    <script src='resources/libs/jquery.airport-1.1.source.js'></script>
+    <link rel="stylesheet"  href='resources/styles.css'>
+    <link rel="stylesheet" href="resources/elusive-webfont/css/elusive-webfont.css">
+    <link rel="stylesheet" href="resources/TestAnimation.css">
+  </head>
+
+  <style type='text/css'>
+      .slides.template-mw > article:not(.nobackground) {
+        background: url(logo/horizontal.png) 687px 630px no-repeat;
+        background-color: white;
+      }
+
+      .slides > article.problem h2{
+        position: absolute;
+        bottom: 50%;
+        margin-top: -22px;
+      }
+
+        .slides > article.problem .icon{
+          color: rgb(244, 58, 109);
+        }
+  </style>
+  <script>
+    $(document).ready(function(){
+      $('.slides a').attr('target', '_blank');
+    });
+  </script>
+
+  <body style='display: none'>
+
+    <section class='slides layout-regular template-mw'>
+
+      <article id='slide1' class='nobackground'>
+        <img src='logo/bluppen_full.png' class='logo_big'/>
+
+        <style>
+        #slide1 {
+          -webkit-perspective: 800px;
+          -webkit-transform-style: preserve-3d;
+        }
+
+        .logo_big {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          margin-left: -190px;
+          margin-top: -190px;
+          z-index: 10;
+          -webkit-animation: rotation 6s ease-in-out 0 infinite;
+          opacity: 0.75;
+        }
+
+        @-webkit-keyframes rotation {
+          0% {
+            -webkit-transform: rotateX(0) rotateY(0) rotateZ(0) translate3d(0,0,0) scale(1);
+          }
+          25% {
+            -webkit-transform: rotateX(180deg) rotateY(180deg) rotateZ(0) translate3d(0,-400px,-800px) scale(0.5);
+          }
+          50% {
+            -webkit-transform: rotateX(360deg) rotateY(360deg) rotateZ(0) translate3d(0,0,0) scale(1);
+          }
+          75% {
+            -webkit-transform: rotateX(180deg) rotateY(180deg) rotateZ(0) translate3d(0,400px,-800px) scale(0.5);
+          }
+          100% {
+            -webkit-transform: rotateX(0) rotateY(0) rotateZ(0) translate3d(0,0,0) scale(1);
+          }
+        }
+        </style>
+        <script>
+          var org = $('.logo_big');
+          var i = 1;
+
+          org.on('webkitAnimationIteration', function() {
+            if(i > 20) {
+              org.off();
+              return;
+            }
+            var c = org.clone();
+            c.css('-webkit-animation-delay', (0.1 * i) + 's');
+            $('#slide1').prepend(c);
+            i++;
+            console.log('Slide #1 animation: clone #' + i + ' created.');
+          });
+
+          function stopSlide1Anim() {
+            console.log('Slide #1 animation: stopping.');
+            $('.logo_big').off().on('webkitAnimationIteration', function() {
+              $(this).css('-webkit-animation', 'none').off();
+              return;
+            });
+          }
+        </script>
+      </article>
+
+      <article onslideenter="stopSlide1Anim();startSlide2Anim();">
+        <h1 style='margin-top:115px;margin-bottom:115px'>
+          CSS3 Animations workshop<br>
+        <div class='subtitle'>lets get rid of GIFs and Flash!</div>
+        </h1>
+
+        <p>
+          Konrad Dzwinel
+          <br>
+          July 14, 2013
+        </p>
+      </article>
+
+        <style>
+        p.smaller {
+          margin: 0;
+          font-size: 75%;
+        }
+        div.subtitle {
+          color: #FFF;
+          text-shadow: #ff0050 0 0 200px;
+          font-size: 32px;
+        }
+          div.subtitle.animate {
+            -webkit-animation: colorsAndShadows 1s ease-in-out 0 forwards;
+          }
+
+        @-webkit-keyframes colorsAndShadows {
+          0% {
+            color: #FFF;
+            text-shadow: #ff0050 0 0 200px;
+          }
+
+          75% {
+            color: #FFF;
+            text-shadow: #ff0050 0 0 0;
+          }
+
+          100% {
+            color: #ff0050;
+            text-shadow: none;
+          }
+        }
+        </style>
+        <script>
+        function startSlide2Anim() {
+          $('.subtitle').addClass('animate');
+        }
+        </script>
+      <article>
+        <h3>How you can animate stuff nowadays?</h3>
+        <ul class="build" style='margin-top:20px'>
+          <li><strong>Flash</strong> sucks
+           <p class="smaller">requiers a plugin (with <a href="http://www.cvedetails.com/vulnerability-list/vendor_id-53/product_id-6761/Adobe-Flash-Player.html">long</a> history of security issues), not supported on iOS/OSX</p>
+         </li>
+          <li><strong>GIFs</strong> suck <a href="http://www.stykz.net/support/help/lessons/About_the_Animated_GIF_Format.php">too</a>
+            <p class="smaller">256 colors, frame delay != FPS, support is not consistent, no antialiasing, no partial transparency</p>
+          </li>
+          <li><strong>JavaScript animations</strong> are not perfect
+            <p class="smaller">too complicated and too slow (that's only partialy true, especialy with <a href="https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame">requestAnimationFrame()</a>)</p>
+          </li>
+          <li><strong>SMIL</strong> is not popular enough
+            <p class="smaller">even thought it's <a href="http://caniuse.com/svg-smil">widely</a> supported and has <a href="http://davidsbigthoughts.blogspot.com/2012/05/smil-vs-css3-animations.html">some advantages</a> over CSS3 animations</p>
+          </li>
+          <li><strong>CSS Transitions</strong> are not enough
+          </li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>
+          What are CSS Animations?
+        </h3>
+        <ul class='build'>
+          <li>Kept in CSS, do not require any other knowldge</li>
+          <li>Easy to write, easy to read</li>
+          <li>Performant</li>
+          <li>Widely supported <br />
+            <iframe src="http://caniuse.com/css-animation/embed/eras=-1,1&stats=none" style="height:300px"></iframe></li>
+        </ul>
+      </article>
+
+      <!-- <article>
+        <h3>
+          Some nice examples
+        </h3>
+        <ul>
+          <li><a href="http://tympanus.net/Tutorials/AnimatedButtons/index5.html">Animated buttons</a></li>
+          <li><a href="http://tympanus.net/Tutorials/TypographyEffects/index3.html">Typography effects</a></li>
+          <li><a href="http://beta.theexpressiveweb.com/#!/css3-animations">Running man</a></li>
+        </ul>
+      </article> -->
+
+      <style>
+      .rotator {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: 50%;
+        margin-left: -50px;
+        top: 50%; margin-top: -50px;
+      }
+      p.animation-syntax u {
+        display: none;
+        text-decoration: none;
+      }
+      p.animation-syntax u.show {
+        display: inline-block;
+      }
+      p.animation-syntax u.current {
+        border-bottom: solid #ff0050 1px;
+        -webkit-animation: jump-in 0.2s;
+      }
+      p.current-attribute {
+        color: #ff0050;
+      }
+      </style>
+      <article id='syntax1slide'>
+        <h3>
+          The Syntax #1
+
+        </h3>
+        <p class="animation-syntax">animation:
+          <u data-attname="animation-name">AnimationName</u>
+          <u data-attname="animation-duration">3s</u>
+          <u data-attname="animation-timing-function">ease-in</u>
+          <u data-attname="animation-delay">1s</u>
+          <u data-attname="animation-iteration-count">2</u>
+          <u data-attname="animation-direction">alternate</u>
+          <u data-attname="animation-fill-mode">none</u>;
+        </p>
+        <p class="current-attribute">-</p>
+        <div style='width:100%; height: 200px; position: relative'>
+          <img src='logo/bluppen_full.png' class='rotator'/>
+        </div>
+        <script>
+          $('p.animation-syntax').click(function() {
+            var u = $(this).find('u:hidden:eq(0)');
+            if(u.length > 0) {
+              attrName = u.data().attname;
+              $('p.current-attribute').text(attrName);
+              $('p.animation-syntax u.current').removeClass('current');
+              u.addClass('show').addClass('current');
+            }
+          });
+          $('#syntax1slide .rotator').click(function() {
+            var c = $(this).clone();
+
+            c.css('-webkit-animation-timing-function', 'ease-in');
+            c.css('margin-top', 60 + 'px');
+            $(this).parent().append(c);
+
+            c = $(this).clone();
+            c.css('-webkit-animation-timing-function', 'ease-in-out');
+            c.css('margin-top', 170 + 'px'); $(this).parent().append(c);
+          });
+        </script>
+      </article>
+
+      <style>
+        .animationExplained {
+          position: absolute;
+          left: 50px;
+          right: 50px;
+        }
+      </style>
+      <article>
+        <h3>
+          The Syntax #2
+        </h3>
+        <div class="build">
+          <pre class="animationExplained">@keyframes MyAnimation {
+    from {
+      margin-left: -100px;
+    }
+    to {
+      margin-left: 300px;
+    }
+  }</pre>
+          <pre class="animationExplained">@keyframes MyAnimation {
+    from {
+      margin-left: -100px;
+    }
+    50% {
+      color: #FF0050; /*neon pink*/
+    }
+    to {
+      margin-left: 300px;
+    }
+  }</pre>
+          <pre class="animationExplained">@keyframes MyAnimation {
+    from {
+      margin-left: -100px;
+    }
+    50% {
+      color: #FF0050; /*neon pink*/
+    }
+    to {
+      margin-left: 300px;
+    }
+    0%, 50%, 100% {
+      margin-top: -100px;
+    }
+    25%, 75% {
+      margin-top: 100px;
+    }
+  }</pre>
+        </div>
+        <div style='width:100%; position: absolute; left: 0; right: 0; top: 0;bottom: 0'>
+          <div class='crazyMonkey' style='-webkit-animation: MyAnimation 10s ease-in-out 0 infinite alternate none'>
+            @
+          </div>
+        </div>
+        <style>
+          .crazyMonkey {
+            position: absolute;
+            display: block;
+            top: 50%;
+            left: 50%;
+            font-size: 40px;
+          }
+        </style>
+      </article>
+
+      <style>
+        i.checkmark {
+          display: inline-block;
+          background: url(resources/checkmark.png) center center no-repeat;
+          background-size: 16px 17px;
+          width: 16px;
+          height: 17px;
+          -webkit-animation: jump-in 0.2s;
+        }
+      </style>
+      <article id='ex1'>
+        <h3>
+          Exercise #1 - lets recreate some native iOS animation
+        </h3>
+
+        <div class="build" style='margin-top: 20px'>
+          <p><a href="resources/ScreenFlow.mov">Intro video</a></p>
+          <pre style='font-size: 14px'>//Some helpful iOS code
+[UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+    imageView.transform = CGAffineTransformMakeScale(1.5f, 1.5f);
+}
+completion:^(BOOL finished){
+    [UIView animateWithDuration:0.05 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+               imageView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+    }
+    completion:^(BOOL finished){}];
+}];</pre>
+        <p>Your task: <a href="http://cdpn.io/ChFjB">cdpn.io/ChFjB</a></p>
+        <p id='ex1sol'>The solution: </p>
+
+        <script>
+          $('#ex1sol').click(function() {
+            $(this).append("<i class='checkmark'></i>");
+          });
+        </script>
+      </article>
+
+      <style>
+      #eventsExampleConsole span {
+        -webkit-animation: colorsAndShadows 0.7s ease-out;
+      }
+      </style>
+      <article>
+        <h3>Animation events</h3>
+        <pre>$('checkmark').on('animationstart',function(){
+  //animation started
+}).on('animationend',function(){
+  //animation end
+}).on('animationiteration',function(){
+  //next iteration started
+});
+
+$('checkmark').addClass('animate');</pre>
+        <p id='eventsExampleConsole'></p>
+        <img src='logo/bluppen_full.png' class='rotator' id='eventsExample' style='margin-top: 100px' />
+      </article>
+      <script>
+        $('#eventsExample').click(function() {
+          $(this).css('-webkit-animation', 'rotate 2s ease-in-out 0 3');
+        }).on('webkitAnimationStart',function(){
+          $('#eventsExampleConsole').append('<span>Start!</span> ');
+        }).on('webkitAnimationEnd',function(){
+          $('#eventsExampleConsole').append('<span>End!</span> ');
+        }).on('webkitAnimationIteration',function(){
+          $('#eventsExampleConsole').append('<span>Iteration!</span> ');
+        });
+      </script>
+
+      <article>
+        <h3>
+          Exercise #2 - switching the modules
+        </h3>
+
+        <div class="build" style='margin-top: 20px'>
+          <p>Your task: <a href="http://cdpn.io/jGEpt">cdpn.io/jGEpt</a></p>
+          <p>My solution: <a href="http://cdpn.io/BjqGc">cdpn.io/BjqGc</a></p>
+        </div>
+    </article>
+
+      <article>
+        <h3>
+          Resources
+        </h3>
+        <ul id='resources_links'>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations">MDN</a></li>
+          <li><a href="http://www.w3.org/TR/css3-animations/">W3C Working Draft</a></li>
+          <li><a href="http://www.css3files.com/animation/">css3files.com</a></li>
+          <li><a href="http://tympanus.net/Tutorials/TypographyEffects/">tympanus.net</a></li>
+          <li><a href="http://beta.theexpressiveweb.com/#!/css3-animations">beta.theexpressiveweb.com</a></li>
+        </ul>
+        <style>
+          #resources_links li{
+            text-overflow: ellipsis;
+            height: 36px;
+            display: block;
+            overflow: hidden;
+          }
+        </style>
+      </article>
+
+      <article class='problem'>
+        <h2><span class="icon icon-smiley-alt"></span> Thank You!</h2>
+        <div class='contact_me'>
+          <span class="icon icon-pencil-alt"></span> <a href='mailto:kdzwinel@gmail.com'>kdzwinel@gmail.com</a><br/>
+          <span class="icon icon-github"></span> <a href='https://github.com/kdzwinel'>kdzwinel</a><br/>
+          <span class="icon icon-stackoverflow"></span> <a href='http://stackoverflow.com/users/1143495/konrad-dzwinel'>konrad-dzwinel</a><br/>
+          <span class="icon icon-paper-clip"></span> <a href='http://goo.gl/update-me' style='font-family: auto; letter-spacing: 2px'>goo.gl/update-me</a></span>
+        </div>
+        <style>
+        .contact_me a, .contact_me a:visited, .slides > article.problem .contact_me .icon{
+          color: black;
+          font-size: 75%;
+        }
+        </style>
+      </article>
+
+      <style>
+        #last-slide.animate {
+          -webkit-animation: madColor 3s infinite alternate;
+        }
+        #last-slide.animate q {
+          -webkit-animation: madRotation 3s infinite;
+        }
+        #last-slide.animate .author {
+          -webkit-animation: madBlink 0.3s infinite;
+        }
+
+        @-webkit-keyframes madColor{
+          0% {
+            background-color: green;
+          }
+
+          50% {
+            background-color: red;
+          }
+
+          100% {
+            background-color: blue;
+          }
+        }
+        @-webkit-keyframes madRotation{
+          0% {
+            -webkit-transform: rotateX(0) rotateY(0) rotateZ(0);
+          }
+          25% {
+            -webkit-transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+          }
+          50% {
+            -webkit-transform: scaleX(1.5) scaleY(0.5);
+          }
+          75% {
+            -webkit-transform: scaleY(1.5) scaleX(0.5);
+          }
+        }
+
+        @-webkit-keyframes madBlink {
+          50% {
+            color: white;
+          }
+        }
+      </style>
+      <article id='last-slide'>
+        <q style='margin-top:60px;'>
+          With great power there must also come great responsibility!
+        </q>
+        <div class='author'>
+          Stan Lee
+        </div>
+      </article>
+      <script>
+      $('#last-slide').click(function() {
+        $(this).addClass('animate');
+      })
+      </script>
+
+    </section>
+
+  </body>
+</html>
